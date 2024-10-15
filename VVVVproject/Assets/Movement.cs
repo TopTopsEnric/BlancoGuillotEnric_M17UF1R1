@@ -75,5 +75,11 @@ public class Movement : MonoBehaviour
         // Invertimos el valor del eje Y en el flip del SpriteRenderer
         _spriteRenderer.flipY = gravityInverted;
     }
+
+    public void Die()
+    {
+        Debug.Log("El personaje ha muerto.");
+        Destroy(gameObject);
+    }
 }
 
