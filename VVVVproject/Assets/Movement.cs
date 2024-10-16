@@ -8,7 +8,8 @@ public class Movement : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     public float speed = 3f;
     private bool gravityInverted = false;
-    
+    private Vector3 respawnPosition = new Vector3(-8.16f, -1.01f, 0);
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -79,7 +80,7 @@ public class Movement : MonoBehaviour
     public void Die()
     {
         Debug.Log("El personaje ha muerto.");
-        Destroy(gameObject);
+        transform.position = respawnPosition;
     }
 }
 
