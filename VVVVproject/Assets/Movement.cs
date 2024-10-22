@@ -94,6 +94,8 @@ public class Movement : MonoBehaviour
     {
         Debug.Log("El personaje ha muerto.");
         transform.position = respawnPosition;
+        
+
     }
 }
 
