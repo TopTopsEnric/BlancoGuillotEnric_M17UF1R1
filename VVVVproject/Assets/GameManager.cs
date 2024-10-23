@@ -5,43 +5,42 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager gameManager;
+    public static GameManager gameManager; // Instancia estática del GameManager
+    private Movement playerMovement; // Referencia al script de movimiento del jugador
     private Stack<GameObject> stack;
-    public void Push(GameObject go)
-    {
-        stack.Push(go);
-    }
 
-    public void Pop()
-    {
-        stack.Pop().SetActive(true);
-    }
-
-    public void Peek()
-    {
-        Debug.Log(stack.Peek());
-    }
     private void Awake()
     {
-        if (gameManager != null && gameManager != this) 
+        // Si ya hay una instancia y no es la actual, destruir este objeto
+        if (gameManager != null && gameManager != this)
         {
             Destroy(this.gameObject);
-            gameManager = this;
+        }
+        else
+        {
+            gameManager = this; // Establece la instancia del GameManager
+            DontDestroyOnLoad(this.gameObject); // No destruir este objeto al cargar una nueva escena
+            stack = new Stack<GameObject>(); // Inicializa el stack
         }
     }
 
-    public void ChangeScene(int scene)
+    public void SetPlayer(Movement movement)
     {
-        SceneManager.LoadScene(scene);
-    }
-    void Start()
-    {
-        
+        playerMovement = movement; // Almacena una referencia al script de movimiento del jugador
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RespawnPlayer()
     {
-        
+        if (playerMovement != null)
+        {
+            playerMovement.Respawn(); // Llama al método Respawn del jugador
+        }
+    }
+
+    public void ChangeScene(int sceneIndex)
+    {
+       
+        SceneManager.LoadScene(sceneIndex);
+        RespawnPlayer(); // Respawn al jugador después de cambiar la escena
     }
 }
