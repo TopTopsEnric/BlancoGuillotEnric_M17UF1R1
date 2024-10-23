@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager; // Instancia estática del GameManager
-    private Movement playerMovement; // Referencia al script de movimiento del jugador
+    private Movement playerMovement;// Referencia al script de movimiento del jugador
+    private Vector3 lastposition;
     private Stack<GameObject> stack;
 
     private void Awake()
@@ -29,18 +30,49 @@ public class GameManager : MonoBehaviour
         playerMovement = movement; // Almacena una referencia al script de movimiento del jugador
     }
 
-    public void RespawnPlayer()
+    public void setPosition(Vector3 position) 
     {
-        if (playerMovement != null)
-        {
-            playerMovement.Respawn(); // Llama al método Respawn del jugador
-        }
+        lastposition = position;
+    }
+
+    public Vector3 getPosition()
+    {
+        return lastposition;
     }
 
     public void ChangeScene(int sceneIndex)
     {
        
         SceneManager.LoadScene(sceneIndex);
-        RespawnPlayer(); // Respawn al jugador después de cambiar la escena
+        
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    // Desuscribirse del evento cuando este objeto sea destruido o desactivado
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+    }
+
+    // Esta función se llama cuando la escena ha terminado de cargarse
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+
+        // Llamar a la función Firsttime()
+        playerMovement.Firsttime();
+
+        // Establecer la posición de respawn al inicio de la escena
+        playerMovement.SetInitialSpawnPosition();
+    }
+
+    void ResetFirstTimeFlag(string sceneName)
+    {
+        PlayerPrefs.DeleteKey(sceneName + "_firstTime");
+        PlayerPrefs.Save();
     }
 }

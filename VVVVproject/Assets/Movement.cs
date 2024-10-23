@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Movement : MonoBehaviour
 {
+    public static GameObject Player;
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     public float speed = 3f;
@@ -11,13 +15,13 @@ public class Movement : MonoBehaviour
     private bool canJump = true;
     public Animator animController;
 
-    private Vector3 respawnPosition; // Guarda la posición de respawn
-    private bool firstSpawn = true; // Indica si es el primer spawn en esta escena
+     // Guarda la posición de respawn
+    private bool firstSpawn ; // Indica si es el primer spawn en esta escena
 
     private void Awake()
     {
         
-        if (GameManager.gameManager != null && GameManager.gameManager != this)
+        if (Player != null && Player != this)
         {
             Destroy(this.gameObject);
         }
@@ -33,29 +37,51 @@ public class Movement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         animController = GetComponent<Animator>();
-
-        // Establecer la posición de respawn al inicio de la escena
-        SetInitialSpawnPosition();
     }
 
-    private void SetInitialSpawnPosition()
+    public void Firsttime()
     {
-        GameObject spawnObject = GameObject.Find("Respawn"); // Suponiendo que hay un objeto con el nombre "Spawn"
-        if (spawnObject != null && firstSpawn == true)
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // Verificar si es la primera vez en esta escena
+        if (PlayerPrefs.GetInt(currentSceneName + "_firstTime", 1) == 1)
         {
-            transform.position = spawnObject.transform.position; // Coloca al jugador en la posición del spawn
-            respawnPosition = transform.position; // Actualiza la posición de respawn
+            firstSpawn = true;
+            Debug.Log("Primera vez en la escena: " + currentSceneName);
+
+            // Marcamos que ya ha entrado a la escena
+            PlayerPrefs.SetInt(currentSceneName + "_firstTime", 0);
+            PlayerPrefs.Save(); // Guardar cambios
         }
         else
         {
-            Debug.LogError("No se ha encontrado un objeto 'Spawn' en la escena.");
+            firstSpawn = false;
+            Debug.Log("Ya has visitado esta escena antes: " + currentSceneName);
         }
     }
 
-    public void Respawn()
+    public void SetInitialSpawnPosition()
     {
-        transform.position = respawnPosition; // Regresa al jugador a la última posición guardada
+        GameObject spawnObject = GameObject.Find("Respawn"); // Suponiendo que hay un objeto con el nombre "Spawn"
+        if ( firstSpawn == true)
+        {
+            Debug.Log("primera vez");
+            transform.position = spawnObject.transform.position; // Coloca al jugador en la posición del spawn
+           
+        }
+        else if(firstSpawn == false)
+        {
+            Debug.Log("No  primera vez");
+            transform.position = GameManager.gameManager.getPosition();
+           
+        }
+        else
+        {
+            Debug.LogError("No se ha encontrado un objeto 'Respawn' en la escena.");
+        }
     }
+
+   
 
     private void Update()
     {
@@ -110,12 +136,9 @@ public class Movement : MonoBehaviour
     public void Die()
     {
         Debug.Log("El personaje ha muerto.");
-        respawnPosition = GameObject.Find("Respawn").transform.position; // Guarda la nueva posición de respawn
-        transform.position = respawnPosition; // Teletransporta al jugador a la nueva posición
+        transform.position = GameObject.Find("Respawn").transform.position;
+       
     }
 
-    public void UpdateSpawnPosition(Vector3 newPosition)
-    {
-        respawnPosition = newPosition; // Actualiza la posición de respawn cuando el jugador toca un objeto que cambia la escena
-    }
+    
 }

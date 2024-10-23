@@ -1,31 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class cambiadorScene : MonoBehaviour
 {
 
 
-    public int sceneToLoad; // Número de la escena a cargar
+    private Vector3 posicion;
+    public int Scenetoload;
+    public string sceneToLoad;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // Verifica si el objeto con el que colisionamos tiene la etiqueta "Player"
         if (other.CompareTag("Player"))
         {
             Debug.Log("El personaje cambiando escena.");
-            GameManager.gameManager.ChangeScene(sceneToLoad);
+            posicion = other.transform.position;
+
+            // Cambiar de escena de forma asíncrona
+            StartCoroutine(ChangeSceneAndSetPosition(posicion, sceneToLoad));
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    // Corutina que cambia de escena y aplica la posición cuando la nueva escena está cargada
+    private IEnumerator ChangeSceneAndSetPosition(Vector3 position, string sceneName)
     {
-        
+        // Cambiar la escena asíncronamente
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        // Esperar a que la escena se cargue completamente
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // Espera un frame
+        }
+
+        // Una vez que la escena ha cargado completamente, aplicar la posición
+        GameManager.gameManager.setPosition(position);
+        Debug.Log("Posición aplicada después de cambiar de escena.");
     }
 }
