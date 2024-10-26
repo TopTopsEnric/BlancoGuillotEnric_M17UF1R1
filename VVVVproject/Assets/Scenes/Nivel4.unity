@@ -9254,7 +9254,7 @@ GameObject:
   - component: {fileID: 1513522680}
   m_Layer: 0
   m_Name: Spawn_salida
-  m_TagString: ChangeScene
+  m_TagString: salida
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9331,7 +9331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5280c72d652db48b85a4943fcf558c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 3
+  Scenetoload: 3
 --- !u!1 &1594745764
 GameObject:
   m_ObjectHideFlags: 0
@@ -9689,7 +9689,7 @@ GameObject:
   - component: {fileID: 1924588245}
   m_Layer: 0
   m_Name: Spawn_entrada
-  m_TagString: ChangeScene
+  m_TagString: entrada
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9766,7 +9766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5280c72d652db48b85a4943fcf558c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 2
+  Scenetoload: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

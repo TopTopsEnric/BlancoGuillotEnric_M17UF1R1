@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646ea66e60f41e14194abc530c839c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 8301727981647978857, guid: 1ae8ebd6a7c15ad4c85a7f6f7b6c8393, type: 3}
+  initialPoolSize: 5
 --- !u!4 &211377001
 Transform:
   m_ObjectHideFlags: 0
@@ -8364,7 +8366,7 @@ GameObject:
   - component: {fileID: 1599715090}
   m_Layer: 0
   m_Name: Spawn_salida
-  m_TagString: ChangeScene
+  m_TagString: salida
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8381,7 +8383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5280c72d652db48b85a4943fcf558c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 1
+  Scenetoload: 1
 --- !u!61 &1599715091
 BoxCollider2D:
   m_ObjectHideFlags: 0

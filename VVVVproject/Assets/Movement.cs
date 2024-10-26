@@ -72,7 +72,7 @@ public class Movement : MonoBehaviour
         else if(firstSpawn == false)
         {
             Debug.Log("No  primera vez");
-            transform.position = GameManager.gameManager.getPosition();
+            transform.position = GameManager.gameManager.getTruePosition();
            
         }
         else
