@@ -14,8 +14,13 @@ public class Movement : MonoBehaviour
     private bool gravityInverted = false;
     private bool canJump = true;
     public Animator animController;
+    public float stepInterval = 0.1f; // Intervalo de tiempo entre pasos
+   
 
-     // Guarda la posición de respawn
+    private AudioSource audioSource;
+    private float stepTimer;
+
+    // Guarda la posición de respawn
     private bool firstSpawn ; // Indica si es el primer spawn en esta escena
 
     private void Awake()
@@ -37,6 +42,7 @@ public class Movement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         animController = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Firsttime()
@@ -85,12 +91,15 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
+        bool isMoving = false;
+
         // Movimiento del jugador
         if (Input.GetKey(KeyCode.D))
         {
             _rb.velocity = new Vector3(speed, _rb.velocity.y, 0);
             animController.SetBool("Corriendo", true);
             if (_spriteRenderer.flipX) _spriteRenderer.flipX = false;
+            isMoving = true;
         }
 
         if (Input.GetKey(KeyCode.A))
@@ -98,6 +107,7 @@ public class Movement : MonoBehaviour
             _rb.velocity = new Vector3(-speed, _rb.velocity.y, 0);
             animController.SetBool("Corriendo", true);
             if (!_spriteRenderer.flipX) _spriteRenderer.flipX = true;
+            isMoving = true;
         }
 
         if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
@@ -115,6 +125,28 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             FlipGravity();
+        }
+
+        if (isMoving)
+        {
+            stepTimer -= Time.deltaTime;
+
+            if (stepTimer <= 0f)
+            {
+                if (audioSource != null && !audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+                stepTimer = stepInterval; // Reinicia el temporizador para el siguiente paso
+            }
+        }
+        else
+        {
+            if (audioSource != null && audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+            stepTimer = 0f; // Reinicia el temporizador si el jugador no se está moviendo
         }
     }
 
