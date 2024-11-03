@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     public float speed = 3f;
     private bool gravityInverted = false;
     private bool canJump = true;
-    public Animator animController;
+    private Animator animController;
     public float stepInterval = 0.1f; // Intervalo de tiempo entre pasos
    
 
@@ -25,15 +25,15 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        
-        if (Player != null && Player != this)
+
+        if (Player == null)
         {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            GameManager.gameManager.SetPlayer(this); // Almacena la referencia al jugador
+            Player = this.gameObject; // Almacena la referencia al jugador
             DontDestroyOnLoad(this.gameObject); // No destruir este objeto al cargar una nueva escena
+        }
+        else if (Player != this.gameObject)
+        {
+            Destroy(this.gameObject); // Destruir la nueva instancia
         }
     }
 
@@ -148,6 +148,8 @@ public class Movement : MonoBehaviour
             }
             stepTimer = 0f; // Reinicia el temporizador si el jugador no se está moviendo
         }
+
+        
     }
 
     void OnCollisionEnter2D(Collision2D collision)

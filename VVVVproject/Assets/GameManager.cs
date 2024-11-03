@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour
     private Movement playerMovement;// Referencia al script de movimiento del jugador
     private Vector3 lastposition;
     private Vector3 postionTrue;
-    public GameObject projectilePrefab; // Prefab del proyectil que deseas usar
+    public GameObject projectilePrefab;
+    public GameObject playerPrefab;// Prefab del proyectil que deseas usar
     public int initialPoolSize = 5;
     public Stack<GameObject> stack;
     private bool salida;
-   
+    
+
 
     private void Awake()
     {
@@ -108,6 +110,14 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
 
+        // Comprobar si el jugador ya existe
+        if (GameObject.FindGameObjectWithTag("Player") == null)
+        {
+            Instantiate(playerPrefab); // Instancia el prefab del jugador solo si no existe
+        }
+
+        // Obtener la referencia del jugador después de instanciar
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<Movement>();
         // Llamar a la función Firsttime()
         playerMovement.Firsttime();
 
