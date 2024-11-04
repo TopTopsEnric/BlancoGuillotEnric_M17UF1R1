@@ -1,5 +1,6 @@
-Analista espacial es un joc on Jugaras amb un analista de una empresa de tecnologias que ha sigut enviat a mirar quins han siguts el danys de la empresa.
+Analista espacial és un joc on Jugaràs amb un analista d'una empresa de tecnologies que ha sigut enviat a mirar quins han sigut els danys de l'empresa.
 
-Per jugar faras servir la "a" i "s" per anar mouret d'esquerra a detra. Despres faras servir la "w" per saltar. I per activar el cambi de gravetat faras servir la tecla "espai".
+Per jugar faràs servir la "a" i "s" per anar moure't d'esquerra a detra. Després faràs servir la "w" per saltar. I per activar el canvi de gravetat faràs servir la tecla "espai".
 
-La estetica es de ciencia ficcio i el genere es un plataformas 2d. Consisteix en 6 escenas on dues d'elles son menus(la del começament y la del final) on tindras que fer servir les diferents mecanicas per pasar els nivells. 
+L'estètica és de ciència-ficció i el gènere és un plataformes 2 d. Consisteix en 6 escenes on dues d'elles són menus (la del començament i la del final) on hauràs de fer servir les diferents mecàniques per passar els nivells. 
+
