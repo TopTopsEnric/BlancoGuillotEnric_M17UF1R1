@@ -9,6 +9,7 @@ public class Menu_principal : MonoBehaviour
     public void Inicir_Juego()
     {
         Debug.Log("esta clicando el boton");
+        ActivarDontDestroyOnLoad();
         SceneManager.LoadScene(1);
     }
 
@@ -24,5 +25,21 @@ public class Menu_principal : MonoBehaviour
 #else
         Application.Quit(); // Cerrar la aplicación
 #endif
+    }
+
+    private void ActivarDontDestroyOnLoad()
+    {
+        Debug.Log("Activando GameObjects de DontDestroyOnLoad");
+        // Obtener todos los objetos en DontDestroyOnLoad
+        GameObject[] objetosDontDestroy = FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in objetosDontDestroy)
+        {
+            // Verificar si el objeto está en la carpeta DontDestroyOnLoad
+            if (obj.scene.name == "DontDestroyOnLoad")
+            {
+                obj.SetActive(true); // Activar el GameObject
+            }
+        }
     }
 }

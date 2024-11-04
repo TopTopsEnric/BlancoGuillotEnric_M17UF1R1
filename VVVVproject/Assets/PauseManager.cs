@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
-    public static GameObject Pause_Manager;
+    public static PauseManager Instance;
     public GameObject menuPausa;
     public bool isPaused = false;
     private void Awake()
     {
 
-        if (Pause_Manager != null && Pause_Manager != this)
+        // Asignar el objeto actual a la instancia
+        if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
         }
         else
         {
-                DontDestroyOnLoad(this.gameObject); // No destruir este objeto al cargar una nueva escena
+            Instance = this; // Asignar la instancia
+            DontDestroyOnLoad(this.gameObject); // No destruir este objeto al cargar una nueva escena
         }
     }
 

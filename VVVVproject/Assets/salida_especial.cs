@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class cambiadorScene : MonoBehaviour
+public class salida_especial : MonoBehaviour
 {
-
-
     private Vector3 posicion;
     public int Scenetoload;
     private string sceneToLoad;
@@ -54,8 +52,9 @@ public class cambiadorScene : MonoBehaviour
 
             if (sceneDictionary.TryGetValue(Scenetoload, out sceneToLoad))
             {
-                // Reproduce el sonido y cambia de escena después
-                PlaySoundAndChangeScene(sceneToLoad);
+                // Destruye el jugador y cambia la escena
+               // Destruye el jugador
+                PlaySoundAndChangeScene(sceneToLoad); // Cambia la escena
             }
             else
             {

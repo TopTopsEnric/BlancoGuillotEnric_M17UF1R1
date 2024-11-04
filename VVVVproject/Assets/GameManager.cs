@@ -109,7 +109,8 @@ public class GameManager : MonoBehaviour
     // Esta función se llama cuando la escena ha terminado de cargarse
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
+        
+        
         // Comprobar si el jugador ya existe
         if (GameObject.FindGameObjectWithTag("Player") == null)
         {
@@ -165,9 +166,26 @@ public class GameManager : MonoBehaviour
         Debug.Log(stack.Peek());
     }
 
+    private void DesactivarDontDestroyOnLoad()
+    {
+        // Obtener todos los objetos en DontDestroyOnLoad
+        GameObject[] objetosDontDestroy = FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in objetosDontDestroy)
+        {
+            // Verificar si el objeto está en la carpeta DontDestroyOnLoad
+            if (obj.scene.name == "DontDestroyOnLoad")
+            {
+                obj.SetActive(false); // Desactivar el objeto
+            }
+        }
+    }
+
     
 
-   
 
-   
+
+
+
+
 }
